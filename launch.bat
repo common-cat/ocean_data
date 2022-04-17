@@ -1,0 +1,1 @@
+java -jar ./MEW_OCEAN.jar

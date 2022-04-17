@@ -1,0 +1,10 @@
+<config>
+    <site id="1"></site>
+    <unit id="3" id_id="3"></unit>
+    <data id="7">
+        <value id="1" name="depth"></value>
+        <value id="2" name="temp"></value>
+        <value id="3" name="salinity"></value>
+    </data>
+    <position id="2317F"></position>
+</config>
