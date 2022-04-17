@@ -238,7 +238,7 @@ public class MainWindow extends JFrame {
             innerPanel.setPreferredSize(new Dimension(mapWidth,mapHeight));
             background.setBounds(0,0,mapWidth,mapHeight);
             innerPanel.add(background);
-            jScrollPane=new PIXScrollPane(innerPanel,thumbIcon);
+            jScrollPane=new PIXScrollPane(innerPanel);
             add(jScrollPane,BorderLayout.CENTER);
             flush();
             validate();
@@ -294,7 +294,7 @@ public class MainWindow extends JFrame {
                 sitesPanel.setPreferredSize(new Dimension(300,40*mapSiteList.size()));
                 ini();
                 setLayout(new BorderLayout());
-                jScrollPane0=new PIXScrollPane(sitesPanel,thumbIcon);
+                jScrollPane0=new PIXScrollPane(sitesPanel);
                 add(jScrollPane0,BorderLayout.CENTER);
             }
             public void ini(){

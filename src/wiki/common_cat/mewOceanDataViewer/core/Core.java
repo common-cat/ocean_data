@@ -35,7 +35,6 @@ public class Core {
     }
     public void readFiles(Iterable<String> paths, TEXTToolWindow textToolWindow) throws IOException, FontFormatException {
         reader=fileReaderFactory.getFileReader(paths);
-        System.out.println(reader);
         sites=reader.getData(paths);
         for(Site site:sites.values()){
             siteList.add(site);

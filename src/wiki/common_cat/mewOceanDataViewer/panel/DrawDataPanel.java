@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 public class DrawDataPanel extends JTabbedPane {
     //数据绘制面板
     protected Map<Integer,AXISDrawer> IDToAxisDrawerMap=new HashMap<>();
+    protected Map<AXISDrawer,PIXScrollPane> axisDrawerPIXScrollPaneMap=new HashMap<>();
     protected Font font;
     protected ToolsPanel toolsPanel;
     protected Map<Integer,String> IDToValue;
@@ -36,7 +37,22 @@ public class DrawDataPanel extends JTabbedPane {
         removeAll();
         for(Integer i:valuesID){
             AXISDrawer aixDrawer=new AXISDrawer(i);
-            add(IDToValue.get(i),aixDrawer);
+            PIXScrollPane pixScrollPane=new PIXScrollPane(aixDrawer);
+            aixDrawer.addCom(pixScrollPane);
+            axisDrawerPIXScrollPaneMap.put(aixDrawer,pixScrollPane);
+            add(IDToValue.get(i),pixScrollPane);
+            aixDrawer.addMouseWheelListener(new MouseWheelListener() {
+                @Override
+                public void mouseWheelMoved(MouseWheelEvent e) {
+                    int i=e.getUnitsToScroll();
+                    if(i>0){
+                        aixDrawer.plusA();
+                    }else {
+                        aixDrawer.subA();
+                    }
+                }
+            });
+            aixDrawer.setPreferredSize(new Dimension(pixScrollPane.getWidth(),pixScrollPane.getHeight()));
             IDToAxisDrawerMap.put(i,aixDrawer);
         }
         add(toolsPanel,"自定义工具");
@@ -61,6 +77,7 @@ public class DrawDataPanel extends JTabbedPane {
         protected double maxX,minX,maxY,minY;
         protected double amplifying=1;
         protected double xBegin,yBegin,xEnd,yEnd;
+        protected PIXScrollPane pixScrollPane;
         protected Color axisColor=Color.RED,pointsColor=Color.BLUE,textColor=Color.GRAY,pointColor=Color.CYAN;
         protected AXISDrawer(Integer dataType){
             yTypeName=IDToValue.get(dataType);
@@ -80,6 +97,9 @@ public class DrawDataPanel extends JTabbedPane {
                     });
                 }
             });
+        }
+        protected void addCom(PIXScrollPane pixScrollPane){
+            this.pixScrollPane=pixScrollPane;
         }
         protected int ratX=0,ratY=0;
         //光标的实际位置
@@ -119,6 +139,27 @@ public class DrawDataPanel extends JTabbedPane {
                         yL = data0[dataType];
                 }
             } catch (Exception e) {
+            }
+        }
+        public void setAmplifying(double amplifying){
+            this.amplifying=amplifying;
+            AXISDrawer.this.setPreferredSize(new Dimension((int)(pixScrollPane.getWidth()*amplifying),(int)(pixScrollPane.getHeight()*amplifying)));
+            repaint();
+        }
+        public void plusA(){
+            if(amplifying<10){
+                amplifying*=1.01;
+                AXISDrawer.this.setPreferredSize(new Dimension((int)(pixScrollPane.getWidth()*amplifying),(int)(pixScrollPane.getHeight()*amplifying)));
+                repaint();
+                pixScrollPane.repaint();
+            }
+        }
+        public void subA(){
+            if(amplifying>0.8){
+                amplifying*=0.99;
+                AXISDrawer.this.setPreferredSize(new Dimension((int)(pixScrollPane.getWidth()*amplifying),(int)(pixScrollPane.getHeight()*amplifying)));
+                repaint();
+                pixScrollPane.repaint();
             }
         }
         protected int[] exactValueParseToPoint(double x0,double y0){

@@ -29,7 +29,6 @@ public class SiteWindow extends JDialog {
             super(frame);
             this.site=site;
             this.pix=pix;
-            this.drawDataPanel=drawDataPanel;
             setSize(width,height);
             setIconImage(icon);
             setTitle("站点名称:"+site.getSiteName()+" 站点ID："+site.getSiteID()+" owo数据界面");

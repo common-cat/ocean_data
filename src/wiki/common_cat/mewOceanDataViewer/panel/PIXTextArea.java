@@ -18,7 +18,7 @@ public class PIXTextArea extends JTextArea {
         setText(text);
         setLineWrap(true);
         setPreferredSize(new Dimension(600,2000));
-        scrollPane=new PIXScrollPane(this,icon);
+        scrollPane=new PIXScrollPane(this);
     }
     public JScrollPane getScrollPane(){
         return scrollPane;

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 public class FilePIXTEXTWindow extends TEXTToolWindow{
     char[] buffer;
@@ -13,7 +14,7 @@ public class FilePIXTEXTWindow extends TEXTToolWindow{
         super(font, icon0, width, height, icon, title,"loading");
         String text="";
         try {
-            Reader reader=new FileReader(path);
+            Reader reader=new FileReader(path, Charset.forName("UTF-8"));
             buffer=new char[(int)(new File(path)).length()];
             int length=reader.read(buffer);
             text=new String(buffer,0,length);

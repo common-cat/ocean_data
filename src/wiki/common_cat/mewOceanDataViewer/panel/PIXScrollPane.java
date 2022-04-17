@@ -12,10 +12,8 @@ import java.awt.image.ImageObserver;
  * @version 1.00
  */
 public class PIXScrollPane extends JScrollPane implements ImageObserver {
-    protected Image icon;
-    public PIXScrollPane(Component component,Image icon){
+    public PIXScrollPane(Component component){
         super(component);
-        this.icon=icon;
         getHorizontalScrollBar().setBackground(Color.WHITE);
         getVerticalScrollBar().setBackground(Color.WHITE);
         setWheelScrollingEnabled(true);
