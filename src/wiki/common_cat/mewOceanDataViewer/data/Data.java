@@ -17,7 +17,9 @@ public class Data {
     //原始数据
     protected int dataClass;
     //数据类型
-    public Data(int dataClass,Integer[] valueIndex){
+    protected Site site;
+    public Data(int dataClass,Integer[] valueIndex,Site site){
+        this.site=site;
         this.valueIndex=valueIndex;
         valueQuantities=valueIndex.length;
         this.dataClass=dataClass;
@@ -57,5 +59,7 @@ public class Data {
     public Integer[] getValueIndex() {
         return valueIndex;
     }
-
+    public Map<Integer,String> getIDToValue(){
+        return site.getIDToValue();
+    }
 }

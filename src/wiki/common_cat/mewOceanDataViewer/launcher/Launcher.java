@@ -1,6 +1,6 @@
 package wiki.common_cat.mewOceanDataViewer.launcher;
 
-import core.Core;
+import wiki.common_cat.mewOceanDataViewer.core.Core;
 import wiki.common_cat.mewOceanDataViewer.tools.CustomToolFactory;
 import org.xml.sax.SAXException;
 
@@ -21,6 +21,16 @@ public class Launcher {
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         CustomToolFactory customToolFactory= null;

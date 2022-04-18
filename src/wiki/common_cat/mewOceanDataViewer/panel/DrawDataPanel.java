@@ -1,11 +1,14 @@
 package wiki.common_cat.mewOceanDataViewer.panel;
 
+import wiki.common_cat.mewOceanDataViewer.data.Site;
 import wiki.common_cat.mewOceanDataViewer.tools.AbstractTool;
 import wiki.common_cat.mewOceanDataViewer.data.Data;
+import wiki.common_cat.mewOceanDataViewer.tools.CustomToolFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -23,14 +26,20 @@ public class DrawDataPanel extends JTabbedPane {
     protected Integer[] valuesID;
     protected Data data;
     protected int valueQuantities;
-    public DrawDataPanel(Font font, Data data, Map<Integer,String> IDToValue,Integer[] valuesID){
+    protected MainWindow mainWindow;
+    protected Map<String,AbstractTool> tools;
+    protected BufferedImage icon;
+    public DrawDataPanel(BufferedImage icon,MainWindow mainWindow,Map<String,AbstractTool> tools,Font font, Data data, Map<Integer,String> IDToValue, Integer[] valuesID){
         setFont(font);
+        this.icon=icon;
         this.font=font;
+        this.tools=tools;
+        this.mainWindow=mainWindow;
         this.valuesID=valuesID;
         this.data=data;
         valueQuantities=IDToValue.size();
         this.IDToValue=IDToValue;
-        toolsPanel=new ToolsPanel();
+        toolsPanel=new ToolsPanel(tools);
         flush();
     }
     public void flush(){
@@ -150,7 +159,7 @@ public class DrawDataPanel extends JTabbedPane {
             if(amplifying<10){
                 amplifying*=1.01;
                 AXISDrawer.this.setPreferredSize(new Dimension((int)(pixScrollPane.getWidth()*amplifying),(int)(pixScrollPane.getHeight()*amplifying)));
-                repaint();
+                validate();
                 pixScrollPane.repaint();
             }
         }
@@ -158,7 +167,7 @@ public class DrawDataPanel extends JTabbedPane {
             if(amplifying>0.8){
                 amplifying*=0.99;
                 AXISDrawer.this.setPreferredSize(new Dimension((int)(pixScrollPane.getWidth()*amplifying),(int)(pixScrollPane.getHeight()*amplifying)));
-                repaint();
+                validate();
                 pixScrollPane.repaint();
             }
         }
@@ -181,8 +190,30 @@ public class DrawDataPanel extends JTabbedPane {
     //TODO
     protected class ToolsPanel extends JPanel{
         //自定义工具界面
-        public ToolsPanel(){
+        protected Map<String,AbstractTool> tools;
+        public ToolsPanel(Map<String,AbstractTool> tools){
             setFont(font);
+            this.tools=tools;
+            setLayout(new GridLayout(tools.size(),1));
+            for(String name:tools.keySet()){
+                JButton button=new JButton(name);
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JPanel panel=tools.get(name).getPanel();
+                        JDialog dialog=new JDialog(mainWindow);
+                        dialog.setFont(font);
+                        dialog.setIconImage(icon);
+                        dialog.setTitle(name);
+                        dialog.setSize(600,400);
+                        dialog.add(panel);
+                        dialog.setVisible(true);
+                    }
+                });
+                add(button);
+                button.setFont(font);
+                button.setBackground(Color.WHITE);
+            }
         }
     }
 }

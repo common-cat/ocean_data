@@ -1,6 +1,6 @@
 package wiki.common_cat.mewOceanDataViewer.panel.toolWindows;
 
-import core.Core;
+import wiki.common_cat.mewOceanDataViewer.core.Core;
 import wiki.common_cat.mewOceanDataViewer.panel.PIX;
 
 import javax.swing.*;
@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -33,7 +34,7 @@ public class ToolWindowFactory {
     private ToolWindowFactory(){
 
     }
-    public static ToolWindowFactory newInstance(Core core,Font font,BufferedImage icon){
+    public static ToolWindowFactory newInstance(Core core, Font font, BufferedImage icon){
         ToolWindowFactory toolWindowFactory=new ToolWindowFactory();
         toolWindowFactory.core=core;
         toolWindowFactory.font=font;
@@ -73,6 +74,16 @@ public class ToolWindowFactory {
                             ioException.printStackTrace();
                         } catch (FontFormatException fontFormatException) {
                             fontFormatException.printStackTrace();
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        } catch (InvocationTargetException invocationTargetException) {
+                            invocationTargetException.printStackTrace();
+                        } catch (NoSuchMethodException noSuchMethodException) {
+                            noSuchMethodException.printStackTrace();
+                        } catch (InstantiationException instantiationException) {
+                            instantiationException.printStackTrace();
+                        } catch (IllegalAccessException illegalAccessException) {
+                            illegalAccessException.printStackTrace();
                         }
                     }
                 });
@@ -104,6 +115,16 @@ public class ToolWindowFactory {
                             ioException.printStackTrace();
                         } catch (FontFormatException fontFormatException) {
                             fontFormatException.printStackTrace();
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        } catch (InvocationTargetException invocationTargetException) {
+                            invocationTargetException.printStackTrace();
+                        } catch (NoSuchMethodException noSuchMethodException) {
+                            noSuchMethodException.printStackTrace();
+                        } catch (InstantiationException instantiationException) {
+                            instantiationException.printStackTrace();
+                        } catch (IllegalAccessException illegalAccessException) {
+                            illegalAccessException.printStackTrace();
                         }
                     }
                 });

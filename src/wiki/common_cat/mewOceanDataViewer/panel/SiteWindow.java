@@ -2,6 +2,8 @@ package wiki.common_cat.mewOceanDataViewer.panel;
 
 import wiki.common_cat.mewOceanDataViewer.data.Data;
 import wiki.common_cat.mewOceanDataViewer.data.Site;
+import wiki.common_cat.mewOceanDataViewer.tools.AbstractTool;
+import wiki.common_cat.mewOceanDataViewer.tools.CustomToolFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,16 +21,20 @@ import java.util.List;
  */
 public class SiteWindow extends JDialog {
         //站点所有的数据窗体
+        protected BufferedImage icon;
         protected Map<Integer,String> IDToTypeMap;
         protected PIX pix;
         protected int width=1000,height=300;
         protected Site site;
         protected DrawDataPanel drawDataPanel;
+        protected Map<String, AbstractTool> tools;
         protected SiteValueListPanel siteValueListPanel;
-        protected SiteWindow(JFrame frame,BufferedImage icon,PIX pix, Site site){
+        protected SiteWindow(JFrame frame,BufferedImage icon,PIX pix, Site site,Map<String,AbstractTool> tools){
             super(frame);
+            this.tools=tools;
             this.site=site;
             this.pix=pix;
+            this.icon=icon;
             setSize(width,height);
             setIconImage(icon);
             setTitle("站点名称:"+site.getSiteName()+" 站点ID："+site.getSiteID()+" owo数据界面");
@@ -42,7 +48,7 @@ public class SiteWindow extends JDialog {
                 public void run() {
                     IDToTypeMap=site.getIDToValue();
                     setLayout(new BorderLayout());
-                    drawDataPanel=new DrawDataPanel(pix.PIXFont,site.getTimeToData().values().iterator().next(),site.getIDToValue(),site.getTimeToData().values().iterator().next().getValueIndex());
+                    drawDataPanel=new DrawDataPanel(icon,(MainWindow)SiteWindow.this.getOwner(),tools,pix.PIXFont,site.getTimeToData().values().iterator().next(),site.getIDToValue(),site.getTimeToData().values().iterator().next().getValueIndex());
                     add(drawDataPanel,BorderLayout.CENTER);
                     siteValueListPanel=new SiteValueListPanel(site);
                     add(siteValueListPanel,BorderLayout.EAST);
@@ -104,7 +110,7 @@ public class SiteWindow extends JDialog {
                     public void itemStateChanged(ItemEvent e) {
                         Data selectedData=contextToDataMap.get(e.getItem().toString());
                         SiteWindow.this.remove(drawDataPanel);
-                        drawDataPanel=new DrawDataPanel(pix.PIXFont,selectedData,IDToTypeMap,selectedData.getValueIndex());
+                        drawDataPanel=new DrawDataPanel(icon,(MainWindow)SiteWindow.this.getOwner(),tools,pix.PIXFont,selectedData,IDToTypeMap,selectedData.getValueIndex());
                         SiteWindow.this.add(drawDataPanel,BorderLayout.CENTER);
                         validate();
                     }

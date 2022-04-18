@@ -1,8 +1,10 @@
 package wiki.common_cat.mewOceanDataViewer.panel;
 
-import core.Core;
+import wiki.common_cat.mewOceanDataViewer.core.Core;
 import wiki.common_cat.mewOceanDataViewer.data.Site;
 import wiki.common_cat.mewOceanDataViewer.panel.toolWindows.ToolWindowFactory;
+import wiki.common_cat.mewOceanDataViewer.tools.AbstractTool;
+import wiki.common_cat.mewOceanDataViewer.tools.CustomToolFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,9 +12,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author common-cat
@@ -64,11 +68,12 @@ public class MainWindow extends JFrame {
     protected BufferedImage siteICON;
     protected BufferedImage siteClickedICON;
 
+    protected Map<String,AbstractTool> tools;
     protected ToolWindowFactory toolWindowFactory;
     protected MapPanel mapPanel;
     protected MapPanel.SitesListPanel sitesListPanel;
     List<MapPanel.MapSite> mapSiteList=new LinkedList<>();
-    public MainWindow(Core core,List<Site> sites,String parentPath,int width,int height) throws IOException, FontFormatException {
+    public MainWindow(Core core, List<Site> sites, String parentPath, int width, int height) throws IOException, FontFormatException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         this.sites=sites;
         this.core=core;
         this.width=width;
@@ -76,7 +81,8 @@ public class MainWindow extends JFrame {
         this.parentPath=parentPath;
         ini();
     }
-    protected void ini() throws IOException, FontFormatException {
+    protected void ini() throws IOException, FontFormatException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        tools=core.getCustomTools();
         earthMap=ImageIO.read(new File(parentPath+EARTH_MAP_PATH));
         icon=ImageIO.read(new File(parentPath + ICON));
         thumbIcon=ImageIO.read(new File(parentPath+THUMB_ICON));
@@ -196,7 +202,7 @@ public class MainWindow extends JFrame {
         validate();
         setVisible(true);
     }
-    public void flush(Iterable<Site> sites) throws IOException, FontFormatException {
+    public void flush(Iterable<Site> sites) throws IOException, FontFormatException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         remove(mapPanel);
         remove(sitesListPanel);
         remove(footBar);
@@ -209,7 +215,7 @@ public class MainWindow extends JFrame {
     //刷新
     protected char[] buffer=new char[1024*1024];
     public void createNewSiteWindow(Site site){
-        new SiteWindow(this,icon,pix,site);
+        new SiteWindow(this,icon,pix,site,tools);
     }
     //创造新的站点窗体 TODO
     protected class MapPanel extends JPanel{

@@ -57,7 +57,7 @@ public class OSFFileReader extends AbstractFileReader implements OSF_POSITION{
                         if (nowSite.getTimeToData().containsKey(nowTime)) {
                             nowSite.getTimeToData().get(nowTime).appendData(data1);
                         } else {
-                            Data data=new Data(DATA,valuesIndex.toArray(new Integer[valuesIndex.size()]));
+                            Data data=new Data(DATA,valuesIndex.toArray(new Integer[valuesIndex.size()]),nowSite);
                             data.appendData(data1);
                             nowSite.getTimeToData().put(nowTime,data);
                         }
