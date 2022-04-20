@@ -130,6 +130,12 @@ public class DrawDataPanel extends JTabbedPane {
             g.clearRect(0, 0, AXISDrawer.this.getWidth(), AXISDrawer.this.getHeight());
             g.setFont(font);
             g.setColor(axisColor);
+            g.drawLine(20,20,70,20);
+            g.drawLine(20,20,20,70);
+            g.setColor(textColor);
+            g.drawString(String.valueOf(50f/getWidth()*(maxX-minX)/amplifying),80,20);
+            g.drawString(String.valueOf(50f/getHeight()*(maxY-minY)/amplifying),20,90);
+            g.setColor(Color.YELLOW);
             g.drawLine(0, ratY, AXISDrawer.this.getWidth(), ratY);
             g.drawLine(ratX, 0, ratX, AXISDrawer.this.getHeight());
             g.setColor(pointColor);
@@ -201,6 +207,7 @@ public class DrawDataPanel extends JTabbedPane {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         JPanel panel=tools.get(name).getPanel();
+                        tools.get(name).setSelectedSite(data.getSite());
                         JDialog dialog=new JDialog(mainWindow);
                         dialog.setFont(font);
                         dialog.setIconImage(icon);

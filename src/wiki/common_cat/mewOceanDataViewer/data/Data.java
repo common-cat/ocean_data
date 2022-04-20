@@ -62,4 +62,7 @@ public class Data {
     public Map<Integer,String> getIDToValue(){
         return site.getIDToValue();
     }
+    public Site getSite(){
+        return site;
+    }
 }

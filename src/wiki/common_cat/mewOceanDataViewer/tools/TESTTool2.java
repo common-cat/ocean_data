@@ -9,8 +9,9 @@ import java.util.Map;
 
 public class TESTTool2 extends AbstractTool{
     public TESTTool2(Map<String, Site> IDSiteMap, MainWindow mainWindow) {
-        super(IDSiteMap, mainWindow);
-        System.out.println("created");
+        super(IDSiteMap,mainWindow);
+        this.IDSiteMap=IDSiteMap;
+        this.mainWindow=mainWindow;
     }
 
     @Override

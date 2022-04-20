@@ -95,12 +95,11 @@ public class SiteWindow extends JDialog {
                 for(Long time1:sortedTime){
                     String time=String.valueOf(time1);
                     StringBuilder stringBuilder=new StringBuilder();
-                    stringBuilder.append(time.substring(0,4)+"/");
-                    stringBuilder.append(time.substring(4,6)+"/");
-                    stringBuilder.append(time.substring(6,8)+" ");
-                    stringBuilder.append(time.substring(8,10)+":");
-                    stringBuilder.append(time.substring(10,12)+":");
-                    stringBuilder.append(time.substring(12,14));
+                        stringBuilder.append(time.substring(0,4)+"/");
+                        stringBuilder.append(time.substring(4,6)+"/");
+                        stringBuilder.append(time.substring(6,8)+" ");
+                        stringBuilder.append(time.substring(8,10)+":");
+                        stringBuilder.append(time.substring(10,12));
                     sitesComboBox.insertItemAt(stringBuilder.toString(),i);
                     contextToDataMap.put(stringBuilder.toString(),timeToDataMap.get(time1));
                     i++;

@@ -15,7 +15,14 @@ public class OSFFileReader extends AbstractFileReader implements OSF_POSITION{
         Site nowSite = null;
         Long nowTime=0l;
         String siteName="";
+        boolean isOld=false;
         for(String path:paths){
+            Long v=Long.parseLong(path.substring(path.length()-10,path.length()-4));
+            if(v<200000){
+                isOld=true;
+            }else {
+                isOld=false;
+            }
             scanner=new Scanner(new BufferedInputStream(new FileInputStream(path)));
             while (scanner.hasNextLine()) {
                 String dataLine = scanner.nextLine();
@@ -27,7 +34,12 @@ public class OSFFileReader extends AbstractFileReader implements OSF_POSITION{
                             nowSiteID = siteID;
                             nowSite = new Site(siteID,siteName,OSF_ID_TO_NAMES);
                             nowSite.setPosition(Site.OSF_POSITION_TYPE, dataLine.substring(SITE_POSITION_BEGIN, SITE_POSITION_END));
-                            stringSiteMap.put(nowSiteID, nowSite);
+                            if(isOld){
+                                stringSiteMap.put(dataLine.substring(SITE_POSITION_BEGIN, SITE_POSITION_END),nowSite);
+                                nowSiteID=dataLine.substring(SITE_POSITION_BEGIN, SITE_POSITION_END);
+                            }else {
+                                stringSiteMap.put(nowSiteID, nowSite);
+                            }
                         }
                         nowTime = Long.parseLong(dataLine.substring(SITE_TIME_BEGIN, SITE_TIME_END).replaceAll(" ",""));
                         break;
@@ -39,18 +51,18 @@ public class OSFFileReader extends AbstractFileReader implements OSF_POSITION{
                         try{
                             depth = Double.parseDouble(dataLine.substring(DEPTH_BEGIN, DEPTH_END).replaceAll(" ",""));
                             valuesIndex.add(0);
-                        }catch (StringIndexOutOfBoundsException e){
+                        }catch (Exception e){
                         }
                         try {
                             temp=Double.parseDouble(dataLine.substring(TEMP_BEGIN, TEMP_END).replaceAll(" ",""));
                             valuesIndex.add(1);
-                        }catch (StringIndexOutOfBoundsException e){
+                        }catch (Exception e){
 
                         }
                         try {
                             salinity = Double.parseDouble(dataLine.substring(SALT_BEGIN, SALT_END).replaceAll(" ",""));
                             valuesIndex.add(2);
-                        }catch (StringIndexOutOfBoundsException e){
+                        }catch (Exception e){
 
                         }
                         double[] data1=new double[]{depth, temp, salinity};

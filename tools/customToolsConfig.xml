@@ -1,4 +1,5 @@
 <config>
     <!-- 这里添加自定义工具的配置 -->
     <tool fileName="TESTTool.class">wiki.common_cat.mewOceanDataViewer.tools.TESTTool</tool>
+    <tool fileName="TESTTool2.class">wiki.common_cat.mewOceanDataViewer.tools.TESTTool2</tool>
 </config>

@@ -27,7 +27,7 @@ public class MainWindow extends JFrame {
     protected Iterable<Site> sites;
     protected Core core;
     //核心
-    public static double GREENWICH_X=-0.425;
+    public static double GREENWICH_X=0;
     public static double PI=3.1415926;
     //格林尼治偏移 偏移中轴线
     public static String EARTH_MAP_PATH="/assets/map_earth.jpg";
@@ -362,7 +362,7 @@ public class MainWindow extends JFrame {
                 }else if(longitude<-90){
                     x0=-0.25;
                 }
-                x0+=(0.5+GREENWICH_X+Math.sin(longitude*PI/180)/4);
+                x0+=(0.5+Math.sin((GREENWICH_X+longitude)*PI/180)/4);
                 //别动这两行
                 x=(int)(x0*mapWidth);
                 y=(int)(y0*mapHeight);
